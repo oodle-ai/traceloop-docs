@@ -22,7 +22,7 @@ processors:
 
 exporters:
   otlphttp/oodle:
-    traces_endpoint: "https://<OODLE_INSTANCE>.collector.oodle.ai/v1/otlp/traces"
+    endpoint: "https://<OODLE_INSTANCE>-otlp.collector.oodle.ai"
     headers:
       X-OODLE-INSTANCE: "<OODLE_INSTANCE>"
       X-API-KEY: "<YOUR_API_KEY>"
@@ -37,7 +37,14 @@ service:
 
 Replace `<OODLE_INSTANCE>` with your Oodle instance ID and `<YOUR_API_KEY>` with the API key from your Oodle dashboard.
 
-Then, point the Traceloop SDK to your collector:
+Since the `-otlp` endpoint uses standard OTLP paths, you can also point the Traceloop SDK directly to Oodle without a collector:
+
+```bash
+TRACELOOP_BASE_URL=https://<OODLE_INSTANCE>-otlp.collector.oodle.ai
+TRACELOOP_HEADERS="X-OODLE-INSTANCE=<OODLE_INSTANCE>,X-API-KEY=<YOUR_API_KEY>"
+```
+
+Alternatively, point the SDK to a local collector:
 
 ```bash
 TRACELOOP_BASE_URL=http://<opentelemetry-collector-hostname>:4318
